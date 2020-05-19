@@ -1,12 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import Constants from 'expo-constants'
+import Deck from './components/Deck'
+import DeckList from './components/DeckList'
+import Quiz from './components/Quiz'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Main</Text>
+      <Deck/>
+      <DeckList/>
+      <Quiz/>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -16,4 +23,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
