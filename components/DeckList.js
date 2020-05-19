@@ -1,26 +1,33 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 import Deck from './Deck'
 import DeckHeader from './DeckHeader'
 import { getDecks } from '../utils/helpers'
+import { receiveDecks } from '../actions'
 
-export default class DeckList extends Component {
+class DeckList extends Component {
   state = {
-    decks: null,
     ready: false,
   }
 
   componentDidMount() {
+    const { dispatch } = this.props
+
     getDecks()
-      .then((decks) => this.setState({
-        decks,
-        ready: true,
-      }))
+      .then((decks) => {
+        dispatch(receiveDecks(decks))
+        
+        this.setState({
+          ready: true,
+        })
+      })
   }
 
   render() {
-    const { decks, ready } = this.state
+    const { decks } = this.props
+    const { ready } = this.state
 
     if (ready === false) {
       return <AppLoading/>
@@ -42,3 +49,11 @@ export default class DeckList extends Component {
     )
   }
 }
+
+function mapStateToProps(decks) {
+  return {
+    decks,
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)
