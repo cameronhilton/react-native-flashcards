@@ -8,8 +8,16 @@ import { NavigationContainer } from '@react-navigation/native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import DeckList from './components/DeckList'
-import Quiz from './components/Quiz'
+import NewDeck from './components/NewDeck'
 import { lightBlue, red, white } from './utils/colors'
+
+function CardsStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
+    </View>
+  )
+}
 
 const RouteConfigs = {
   DeckList: {
@@ -17,15 +25,15 @@ const RouteConfigs = {
     component: DeckList,
     options: {
       tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />,
-      title: 'All Decks'
+      title: 'View Decks'
     }
   }, 
-  Quiz: {
-    component: Quiz,
-    name: 'Quiz',
+  NewDeck: {
+    component: NewDeck,
+    name: 'NewDeck',
     options: {
       tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />,
-      title: 'Quiz'
+      title: 'New Deck'
     }
   },
 }
@@ -57,7 +65,7 @@ const Tab = Platform.OS === 'ios'
 const TabNav = () => (
   <Tab.Navigator {...TabNavigatorConfig}>
     <Tab.Screen {...RouteConfigs['DeckList']} />
-    <Tab.Screen {...RouteConfigs['Quiz']} />
+    <Tab.Screen {...RouteConfigs['NewDeck']} />
   </Tab.Navigator>
 )
 
@@ -95,10 +103,13 @@ const MainNav = () => (
 
 export default function App() {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <NavigationContainer>
-        <MainNav/>
-      </NavigationContainer>
-    </SafeAreaView>
+    <View style={{flex: 1}}>
+      <CardsStatusBar backgroundColor={lightBlue} barStyle='light-content'/>
+      <SafeAreaView style={{flex: 1}}>
+        <NavigationContainer>
+          <MainNav/>
+        </NavigationContainer>
+      </SafeAreaView>
+    </View>
   )
 }
