@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import DeckHeader from './DeckHeader'
 
-export default class Deck extends Component {
+export default class NewDeck extends Component {
   render() {
     return (
       <View>
-        <DeckHeader title='Some Deck'/>
-        <Text>Deck</Text>
+        <DeckHeader title='Create New Deck'/>
+        {/* input title, create deck button */}
       </View>
     )
   }
