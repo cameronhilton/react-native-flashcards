@@ -1,5 +1,7 @@
 import 'react-native-gesture-handler'
 import React from 'react'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -9,6 +11,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
+import reducer from './reducers'
 import { lightBlue, red, white } from './utils/colors'
 
 function CardsStatusBar({ backgroundColor, ...props }) {
@@ -102,14 +105,15 @@ const MainNav = () => (
 )
 
 export default function App() {
+  const store = createStore(reducer)
   return (
-    <View style={{flex: 1}}>
+    <Provider store={store}>
       <CardsStatusBar backgroundColor={lightBlue} barStyle='light-content'/>
       <SafeAreaView style={{flex: 1}}>
         <NavigationContainer>
           <MainNav/>
         </NavigationContainer>
       </SafeAreaView>
-    </View>
+    </Provider>
   )
 }
