@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
-import Deck from './Deck'
 import DeckHeader from './DeckHeader'
 import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
@@ -44,14 +43,22 @@ class DeckList extends Component {
               </View>
             : Object.keys(decks).map((deck) => {
                 return (
-                  <View key={deck} style={styles.deck}>
-                    <DeckHeader title={decks[deck].title} fontSize={20}/>
-                    <View style={styles.center}>
-                      <Text style={{fontSize: 18, paddingTop: 5}}>
-                        {decks[deck].questions.length} cards
-                      </Text>
+                  <TouchableOpacity
+                    key={deck}
+                    onPress={() => this.props.navigation.navigate(
+                      'Deck',
+                      { deck: decks[deck] },
+                    )}
+                  >
+                    <View style={styles.deck}>
+                      <DeckHeader title={decks[deck].title} fontSize={20}/>
+                      <View style={styles.center}>
+                        <Text style={{fontSize: 18, paddingTop: 5}}>
+                          {decks[deck].questions.length} cards
+                        </Text>
+                      </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 )
               })}
         </ScrollView>
