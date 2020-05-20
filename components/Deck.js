@@ -8,6 +8,12 @@ import {
 import Card from './Card'
 
 export default class Deck extends Component {
+  componentDidMount() {
+    const { navigation } = this.props
+    
+    navigation.setOptions({ title: this.props.route.params.deck.title })
+  }
+
   render() {
     const { deck } = this.props.route.params
 

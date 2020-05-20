@@ -91,7 +91,6 @@ const StackConfig = {
       headerStyle: {
         backgroundColor: lightBlue,
       },
-      title: 'Deck',
     },
   }
 }
