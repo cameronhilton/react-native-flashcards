@@ -5,7 +5,7 @@ import { AppLoading } from 'expo'
 import DeckHeader from './DeckHeader'
 import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
-import { darkBlue, white } from '../utils/colors'
+import { white } from '../utils/colors'
 
 class DeckList extends Component {
   state = {
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: white,
-    borderColor: darkBlue,
-    borderWidth: 1,
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
     marginTop: 10,
     marginBottom: 10,
+    marginLeft: 3,
+    marginRight: 3,
     shadowRadius: 3,
     shadowOpacity: 0.8,
     color: 'rgba(0, 0, 0, 0.24)',
