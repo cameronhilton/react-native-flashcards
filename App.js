@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
+import Deck from './components/Deck'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import reducer from './reducers'
@@ -82,15 +83,15 @@ const StackConfig = {
     component: TabNav,
     options: { headerShown: false },
   }, 
-  DeckList: {
-    name: 'DeckList',
-    component: DeckList,
+  Deck: {
+    name: 'Deck',
+    component: Deck,
     options: {
       headerTintColor: white,
       headerStyle: {
         backgroundColor: lightBlue,
       },
-      title: 'DeckList',
+      title: 'Deck',
     },
   }
 }
@@ -100,7 +101,7 @@ const Stack = createStackNavigator();
 const MainNav = () => (
   <Stack.Navigator {...StackNavigatorConfig}>
     <Stack.Screen {...StackConfig['TabNav']}/>
-    <Stack.Screen {...StackConfig['DeckList']}/>
+    <Stack.Screen {...StackConfig['Deck']}/>
   </Stack.Navigator>
 )
 
