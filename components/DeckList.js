@@ -47,7 +47,7 @@ class DeckList extends Component {
                     key={deck}
                     onPress={() => this.props.navigation.navigate(
                       'Deck',
-                      { deck: decks[deck] },
+                      { deck: deck },
                     )}
                   >
                     <View style={styles.deck}>

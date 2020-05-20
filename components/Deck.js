@@ -5,26 +5,28 @@ import {
   StyleSheet,
   Text,
   View } from 'react-native'
+import { connect } from 'react-redux'
 import Card from './Card'
 
-export default class Deck extends Component {
+class Deck extends Component {
   componentDidMount() {
-    const { navigation } = this.props
-    
-    navigation.setOptions({ title: this.props.route.params.deck.title })
+    const { decks, navigation } = this.props
+
+    navigation.setOptions({ title: decks[this.props.route.params.deck].title })
   }
 
   render() {
     const { deck } = this.props.route.params
+    const { decks } = this.props
 
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView >
-          {deck.questions.length === 0
+          {decks[deck].questions.length === 0
             ? <View style={styles.center}>
                 <Text>No cards created yet</Text>
               </View>
-            : deck.questions.map((qAndA) => {
+            : decks[deck].questions.map((qAndA) => {
                 return (
                   <Card key={qAndA.question} qAndA={qAndA}/>
                 )
@@ -49,3 +51,11 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
 })
+
+function mapStateToProps(decks) {
+  return {
+    decks,
+  }
+}
+
+export default connect(mapStateToProps)(Deck)

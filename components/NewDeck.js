@@ -14,16 +14,18 @@ class NewDeck extends Component {
   onChangeText = (text) => this.setState({value: text})
 
   handleOnPress = () => {
-    const { dispatch } = this.props
+    const { dispatch, navigation } = this.props
 
     saveDeckTitle(this.state.value)
       .then((deck) => {
         dispatch(addDeck(deck))
       })
-    
-    this.setState(() => ({
-      value: '',
-    }))
+      .then(() => {
+        navigation.navigate(
+          'Deck',
+          { deck: this.state.value },
+        )
+      })
   }
 
   render() {
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     height: 45,
     borderRadius: 2,
-    alignSelf: 'flex-end',
+    marginLeft: 60,
+    marginRight: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
