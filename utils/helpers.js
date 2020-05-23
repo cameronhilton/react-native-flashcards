@@ -9,7 +9,7 @@ export async function getDecks() {
   if (results === null) {
     addSampleCards()
   }
-
+  
   return samples
 }
 
@@ -22,9 +22,17 @@ export async function saveDeckTitle(title) {
     },
   }
 
-  console.warn(title)
   await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(newDeck))
   return (newDeck)
+}
+
+// add the card to the list of questions for the deck with the associated title
+export function addCardToDeck(title, card) {
+  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+    [title]: {
+      questions: [card],
+    },
+  }))
 }
 
 const samples = {
@@ -47,6 +55,15 @@ const samples = {
       {
         question: 'What is a closure?',
         answer: 'The combination of a function and the lexical environment within which that function was declared.'
+      }
+    ]
+  },
+  Puppy: {
+    title: 'Puppy',
+    questions: [
+      {
+        question: 'What is a puppy?',
+        answer: 'A little pooch.'
       }
     ]
   }
