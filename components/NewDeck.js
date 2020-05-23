@@ -20,11 +20,13 @@ class NewDeck extends Component {
       .then((deck) => {
         dispatch(addDeck(deck))
       })
-      .then(() => {
+      .then(() => {        
         navigation.navigate(
           'Deck',
           { deck: this.state.value },
         )
+
+        this.setState(() => ({value: ''}))
       })
   }
 
@@ -43,10 +45,13 @@ class NewDeck extends Component {
             maxLength={50}
           />
           <TouchableOpacity
-            style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+            style={[
+              Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
+              { opacity: question === '' || answer === '' ? 0.5 : 1 }
+            ]}
             disabled={value === ''}
             onPress={this.handleOnPress}>
-            <Text style={styles.submitBtnText}>Submit</Text>
+            <Text style={styles.submitBtnText}>Create Deck</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
