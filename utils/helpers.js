@@ -5,12 +5,21 @@ const DECK_STORAGE_KEY = 'FlashCards:decks'
 // return all of the decks along with their titles, questions, and answers
 export async function getDecks() {
   const results = await AsyncStorage.getItem(DECK_STORAGE_KEY)
-  // TODO: remove after testing
+
   if (results === null) {
     addSampleCards()
+
+    return samples
   }
-  
-  return samples
+
+  return JSON.parse(results)
+}
+
+// return the deck associated with id
+export async function getDeck(title) {
+  const results = await AsyncStorage.getItem(DECK_STORAGE_KEY)
+
+  return JSON.parse(results)[title]
 }
 
 // add title to the decks
