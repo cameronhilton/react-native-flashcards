@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux'
 import Card from './Card'
 import DeckHeader from './DeckHeader'
+import FloatBtn from './FloatBtn'
 
 class Deck extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class Deck extends Component {
 
   render() {
     const { deck } = this.props.route.params
-    const { decks } = this.props
+    const { decks, navigation } = this.props
     const deckLength = decks[deck].questions.length
     const lengthText = deckLength === 1 ? 'card' : 'cards'
 
@@ -36,6 +37,7 @@ class Deck extends Component {
                 )
               })}
         </ScrollView>
+        <FloatBtn toComponent={'NewCard'} navigation={navigation} params={{deck}}/>
       </SafeAreaView>
     )
   }

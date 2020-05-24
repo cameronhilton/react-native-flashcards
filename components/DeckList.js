@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } fr
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 import DeckHeader from './DeckHeader'
+import FloatBtn from './FloatBtn'
 import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
 import { white } from '../utils/colors'
@@ -26,7 +27,7 @@ class DeckList extends Component {
   }
 
   render() {
-    const { decks } = this.props
+    const { decks, navigation } = this.props
     const { ready } = this.state
 
     if (ready === false) {
@@ -35,7 +36,7 @@ class DeckList extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <DeckHeader title='Deck List'/>
+        <DeckHeader title='Decks'/>
         <ScrollView >
           {decks === null
             ? <View>
@@ -45,7 +46,7 @@ class DeckList extends Component {
                 return (
                   <TouchableOpacity
                     key={deck}
-                    onPress={() => this.props.navigation.navigate(
+                    onPress={() => navigation.navigate(
                       'Deck',
                       { deck: deck },
                     )}
@@ -62,6 +63,7 @@ class DeckList extends Component {
                 )
               })}
         </ScrollView>
+        <FloatBtn toComponent={'NewDeck'} navigation={navigation}/>
       </SafeAreaView>
     )
   }
@@ -71,7 +73,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    margin: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 20,
   },
   deck: {
     flex: 1,
