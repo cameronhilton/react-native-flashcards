@@ -20,7 +20,7 @@ class NewDeck extends Component {
       .then((deck) => {
         dispatch(addDeck(deck))
       })
-      .then(() => {        
+      .then(() => {
         navigation.navigate(
           'Deck',
           { deck: this.state.value },
@@ -50,7 +50,7 @@ class NewDeck extends Component {
               { opacity: question === '' || answer === '' ? 0.5 : 1 }
             ]}
             disabled={value === ''}
-            onPress={this.handleOnPress}>
+            onPress={() => this.handleOnPress()}>
             <Text style={styles.submitBtnText}>Create Deck</Text>
           </TouchableOpacity>
         </View>

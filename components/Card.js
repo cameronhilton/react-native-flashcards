@@ -18,7 +18,7 @@ export default class Card extends Component {
   flipCard = () => {
     const { flipValue } = this.state
 
-    if (flipValue._value > 1.55707) {
+    if (flipValue._value > Math.PI / 2) {
       Animated.spring(flipValue, {
         toValue: 0,
         tension: 10,
@@ -26,7 +26,7 @@ export default class Card extends Component {
       }).start()
     } else {
       Animated.spring(flipValue, {
-        toValue: 3.1415,
+        toValue: Math.PI,
         tension: 10,
         friction: 8,
       }).start()
@@ -38,7 +38,7 @@ export default class Card extends Component {
     const { flipValue, showQuestion } = this.state
 
     return (
-      <TouchableOpacity onPress={this.toggleQuestion}>
+      <TouchableOpacity onPress={() => this.toggleQuestion()}>
         <Animated.View style={[
           styles.card,
           {transform: [

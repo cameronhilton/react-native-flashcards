@@ -33,7 +33,7 @@ class NewCard extends Component {
       .then(() => {
         dispatch(addCard(deck, card))
       })
-      .then(() => {        
+      .then(() => {
         this.setState(() => ({
           question: '',
           answer: '',
@@ -75,7 +75,7 @@ class NewCard extends Component {
               { opacity: question === '' || answer === '' ? 0.5 : 1 }
             ]}
             disabled={question === '' || answer === ''}
-            onPress={this.handleOnPress}>
+            onPress={() => this.handleOnPress()}>
             <Text style={styles.submitBtnText}>Create Card</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
@@ -87,7 +87,7 @@ class NewCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10, 
+    padding: 10,
     margin: 20,
   },
   textInput: {
