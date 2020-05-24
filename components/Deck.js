@@ -7,6 +7,7 @@ import {
   View } from 'react-native'
 import { connect } from 'react-redux'
 import Card from './Card'
+import DeckHeader from './DeckHeader'
 
 class Deck extends Component {
   componentDidMount() {
@@ -18,12 +19,15 @@ class Deck extends Component {
   render() {
     const { deck } = this.props.route.params
     const { decks } = this.props
+    const deckLength = decks[deck].questions.length
+    const lengthText = deckLength === 1 ? 'card' : 'cards'
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView >
+        <DeckHeader title={`${decks[deck].title} - ${deckLength} ${lengthText}`}/>
+        <ScrollView>
           {decks[deck].questions.length === 0
-            ? <View style={styles.center}>
+            ? <View style={[styles.center, {padding: 20}]}>
                 <Text>No cards created yet</Text>
               </View>
             : decks[deck].questions.map((qAndA) => {
