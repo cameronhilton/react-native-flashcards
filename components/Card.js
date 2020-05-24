@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { white } from '../utils/colors'
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { darkBlue, white } from '../utils/colors'
 
 export default class Card extends Component {
   state = {
@@ -34,23 +34,32 @@ export default class Card extends Component {
   }
 
   render() {
-    const { qAndA } = this.props
+    const { showAnswerBtn, qAndA } = this.props
     const { flipValue, showQuestion } = this.state
 
     return (
-      <TouchableOpacity onPress={() => this.toggleQuestion()}>
-        <Animated.View style={[
-          styles.card,
-          {transform: [
-            {rotateY: flipValue},
-            {scaleX: showQuestion ? 1 : -1}]
-          }]}
-        >
-          {showQuestion
-            ? <Text style={styles.cardText}>{qAndA.question}</Text>
-            : <Text style={styles.cardText}>{qAndA.answer}</Text>}
-        </Animated.View>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={() => this.toggleQuestion()}>
+          <Animated.View style={[
+            styles.card,
+            {transform: [
+              {rotateY: flipValue},
+              {scaleX: showQuestion ? 1 : -1}]
+            }]}
+          >
+            {showQuestion
+              ? <Text style={styles.cardText}>{qAndA.question}</Text>
+              : <Text style={styles.cardText}>{qAndA.answer}</Text>}
+          </Animated.View>
+        </TouchableOpacity>
+        {showAnswerBtn &&
+          <TouchableOpacity
+            style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+            onPress={() => this.toggleQuestion()}
+          >
+            <Text style={styles.submitBtnText}>Show Answer</Text>
+          </TouchableOpacity>}
+      </View>
     )
   }
 }
@@ -75,5 +84,30 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
+  },
+  iosSubmitBtn: {
+    backgroundColor: darkBlue,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 60,
+    marginRight: 60,
+  },
+  androidSubmitBtn: {
+    backgroundColor: darkBlue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    marginLeft: 60,
+    marginRight: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
   },
 })

@@ -67,7 +67,7 @@ class Quiz extends Component {
               </View>
             </View>
           : <ScrollView contentContainerStyle={styles.grow}>
-              <Card qAndA={deck.questions[cardIndex]}/>
+              <Card qAndA={deck.questions[cardIndex]} showAnswerBtn={true}/>
               <View style={[styles.center, {flexDirection: 'row'}]}>
                 <TouchableOpacity
                   style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
