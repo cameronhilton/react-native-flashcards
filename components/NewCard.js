@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import {
+  Keyboard,
   Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import DeckHeader from './DeckHeader'
@@ -52,38 +54,40 @@ class NewCard extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <DeckHeader title='Create New Card'/>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          style={styles.center}
-        >
-          <TextInput
-            style={styles.textInput}
-            placeholder='Question'
-            value={question}
-            onChangeText={text => this.onChangeText('question', text)}
-            maxLength={250}
-            multiline={true}
-            blurOnSubmit={true}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder='Answer'
-            value={answer}
-            onChangeText={text => this.onChangeText('answer', text)}
-            maxLength={250}
-            multiline={true}
-            blurOnSubmit={true}
-          />
-          <TouchableOpacity
-            style={[
-              Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
-              { opacity: question === '' || answer === '' ? 0.5 : 1 }
-            ]}
-            disabled={question === '' || answer === ''}
-            onPress={() => this.handleOnPress()}>
-            <Text style={styles.submitBtnText}>Create Card</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+            style={styles.center}
+          >
+            <TextInput
+              style={styles.textInput}
+              placeholder='Question'
+              value={question}
+              onChangeText={text => this.onChangeText('question', text)}
+              maxLength={250}
+              multiline={true}
+              blurOnSubmit={true}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder='Answer'
+              value={answer}
+              onChangeText={text => this.onChangeText('answer', text)}
+              maxLength={250}
+              multiline={true}
+              blurOnSubmit={true}
+            />
+            <TouchableOpacity
+              style={[
+                Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
+                { opacity: question === '' || answer === '' ? 0.5 : 1 }
+              ]}
+              disabled={question === '' || answer === ''}
+              onPress={() => this.handleOnPress()}>
+              <Text style={styles.submitBtnText}>Create Card</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
       </SafeAreaView>
     )
   }

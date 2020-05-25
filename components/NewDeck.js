@@ -1,5 +1,14 @@
 import React, { Component } from 'react'
-import { Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback } from 'react-native'
 import { StackActions } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import DeckHeader from './DeckHeader'
@@ -38,24 +47,26 @@ class NewDeck extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <DeckHeader title='Create New Deck'/>
-        <View style={styles.center}>
-          <TextInput
-            style={styles.textInput}
-            placeholder='New Deck Name'
-            value={value}
-            onChangeText={text => this.onChangeText(text)}
-            maxLength={50}
-          />
-          <TouchableOpacity
-            style={[
-              Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
-              { opacity: value === '' ? 0.5 : 1 }
-            ]}
-            disabled={value === ''}
-            onPress={() => this.handleOnPress()}>
-            <Text style={styles.submitBtnText}>Create Deck</Text>
-          </TouchableOpacity>
-        </View>
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <KeyboardAvoidingView style={styles.center}>
+              <TextInput
+                  style={styles.textInput}
+                  placeholder='New Deck Name'
+                  value={value}
+                  onChangeText={text => this.onChangeText(text)}
+                  maxLength={50}
+                />
+                <TouchableOpacity
+                  style={[
+                    Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
+                    { opacity: value === '' ? 0.5 : 1 }
+                  ]}
+                  disabled={value === ''}
+                  onPress={() => this.handleOnPress()}>
+                  <Text style={styles.submitBtnText}>Create Deck</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
       </SafeAreaView>
     )
   }
