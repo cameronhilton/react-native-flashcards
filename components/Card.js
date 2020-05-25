@@ -6,6 +6,7 @@ export default class Card extends Component {
   state = {
     showQuestion: true,
     flipValue: new Animated.Value(0),
+    currentQuestion: null,
   }
 
   toggleQuestion = () => {
@@ -31,6 +32,21 @@ export default class Card extends Component {
         friction: 8,
       }).start()
     }
+  }
+
+  // If new question received, reset card to initial state
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { question } = nextProps.qAndA
+
+    if (question !== prevState.currentQuestion) {
+      return {
+        showQuestion: true,
+        flipValue: new Animated.Value(0),
+        currentQuestion: question,
+      }
+    }
+
+    return null
   }
 
   render() {
@@ -92,6 +108,7 @@ const styles = StyleSheet.create({
     height: 45,
     marginLeft: 60,
     marginRight: 60,
+    marginTop: 10,
   },
   androidSubmitBtn: {
     backgroundColor: darkBlue,
