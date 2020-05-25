@@ -30,7 +30,7 @@ class Deck extends Component {
           ? <View style={styles.center}>
               <Text>No cards created yet</Text>
             </View>
-          : <ScrollView>
+          : <ScrollView contentContainerStyle={{paddingBottom: 100}}>
               {decks[deck].questions.map((qAndA) => (
                 <Card key={qAndA.question} qAndA={qAndA}/>))}
             </ScrollView>}
