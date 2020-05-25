@@ -2,18 +2,17 @@ import 'react-native-gesture-handler'
 import React from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { SafeAreaView, StatusBar, View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import Deck from './components/Deck'
 import DeckList from './components/DeckList'
+import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
+import Quiz from './components/Quiz'
 import reducer from './reducers'
-import { lightBlue, red, white } from './utils/colors'
+import { lightBlue } from './utils/colors'
 
 function CardsStatusBar({ backgroundColor, ...props }) {
   return (
@@ -23,97 +22,79 @@ function CardsStatusBar({ backgroundColor, ...props }) {
   )
 }
 
-const RouteConfigs = {
-  DeckList: {
-    name: 'DeckList',
-    component: DeckList,
-    options: {
-      tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />,
-      title: 'View Decks'
-    }
-  }, 
-  NewDeck: {
-    component: NewDeck,
-    name: 'NewDeck',
-    options: {
-      tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />,
-      title: 'New Deck'
-    }
-  },
-}
-
-const TabNavigatorConfig = {
-  navigationOptions: {
-    header: null,
-  },
-  tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? lightBlue : white,
-    style: {
-      height: 56,
-      backgroundColor: Platform.OS === 'ios' ? white : lightBlue,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
-      shadowOffset: {
-        width: 0,
-        height: 3,
-      },
-      shadowRadius: 6,
-      shadowOpacity: 1,
-    }
+const StackNavigatorConfig = {
+  headerMode: 'screen',
+  defaultNavigationOptions: {
+      headerTitleAlign: 'center',
   }
 }
 
-const Tab = Platform.OS === 'ios'
-  ? createBottomTabNavigator() 
-  : createMaterialTopTabNavigator()
-
-const TabNav = () => (
-  <Tab.Navigator {...TabNavigatorConfig}>
-    <Tab.Screen {...RouteConfigs['DeckList']} />
-    <Tab.Screen {...RouteConfigs['NewDeck']} />
-  </Tab.Navigator>
-)
-
-const StackNavigatorConfig = {
-  headerMode: 'screen',
-}
-
 const StackConfig = {
-  TabNav: {
-    name: 'Home',
-    component: TabNav,
-    options: { headerShown: false },
-  }, 
   Deck: {
     name: 'Deck',
     component: Deck,
     options: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: lightBlue,
-      },
+      title: 'Deck',
     },
-  }
+  },
+  DeckList: {
+    name: 'Home',
+    component: DeckList,
+    options: {
+      headerShown: false
+    },
+  },
+  NewDeck: {
+    component: NewDeck,
+    name: 'NewDeck',
+    options: {
+      title: 'New Deck'
+    }
+  },
+  NewCard: {
+    name: 'NewCard',
+    component: NewCard,
+    options: {
+      title: 'Add Card'
+    }
+  },
+  Quiz: {
+    name: 'Quiz',
+    component: Quiz,
+    options: {
+      title: 'Quiz'
+    }
+  },
 }
 
 const Stack = createStackNavigator();
 
 const MainNav = () => (
   <Stack.Navigator {...StackNavigatorConfig}>
-    <Stack.Screen {...StackConfig['TabNav']}/>
+    <Stack.Screen {...StackConfig['DeckList']}/>
+    <Stack.Screen {...StackConfig['NewDeck']}/>
     <Stack.Screen {...StackConfig['Deck']}/>
+    <Stack.Screen {...StackConfig['NewCard']}/>
+    <Stack.Screen {...StackConfig['Quiz']}/>
   </Stack.Navigator>
 )
 
-export default function App() {
-  const store = createStore(reducer)
-  return (
-    <Provider store={store}>
-      <CardsStatusBar backgroundColor={lightBlue} barStyle='light-content'/>
-      <SafeAreaView style={{flex: 1}}>
-        <NavigationContainer>
-          <MainNav/>
-        </NavigationContainer>
-      </SafeAreaView>
-    </Provider>
-  )
+class App extends React.Component {
+  store = createStore(reducer)
+
+  render() {
+    return (
+      <Provider store={this.store}>
+        <CardsStatusBar backgroundColor={lightBlue} barStyle='light-content'/>
+        <SafeAreaView style={{flex: 1}}>
+          <NavigationContainer>
+            <MainNav/>
+          </NavigationContainer>
+        </SafeAreaView>
+      </Provider>
+    )
+  }
+
 }
+
+export default App
