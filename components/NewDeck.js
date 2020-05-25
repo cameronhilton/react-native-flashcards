@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StackActions } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import DeckHeader from './DeckHeader'
 import { addDeck } from '../actions'
@@ -21,9 +22,10 @@ class NewDeck extends Component {
         dispatch(addDeck(deck))
       })
       .then(() => {
-        navigation.navigate(
-          'Deck',
-          { deck: this.state.value },
+        navigation.dispatch(
+          StackActions.replace('Deck', {
+            deck: this.state.value,
+          })
         )
 
         this.setState(() => ({value: ''}))
