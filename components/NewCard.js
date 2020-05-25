@@ -22,7 +22,7 @@ class NewCard extends Component {
   onChangeText = (field, text) => this.setState({[field]: text})
 
   handleOnPress = () => {
-    const { dispatch, route } = this.props
+    const { dispatch, navigation, route } = this.props
     const deck = route.params.deck
     const card = {
       question: this.state.question,
@@ -34,6 +34,11 @@ class NewCard extends Component {
         dispatch(addCard(deck, card))
       })
       .then(() => {
+        navigation.navigate(
+          'Deck',
+          { deck, },
+        )
+
         this.setState(() => ({
           question: '',
           answer: '',
