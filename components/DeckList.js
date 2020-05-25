@@ -6,7 +6,7 @@ import DeckHeader from './DeckHeader'
 import FloatBtn from './FloatBtn'
 import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
-import { white } from '../utils/colors'
+import { red, white } from '../utils/colors'
 
 class DeckList extends Component {
   state = {
@@ -63,7 +63,13 @@ class DeckList extends Component {
                 )
               })}
         </ScrollView>
-        <FloatBtn toComponent={'NewDeck'} navigation={navigation}/>
+        <FloatBtn
+          toComponent={'NewDeck'}
+          navigation={navigation}
+          position={'right'}
+          bgColor={red}
+          iconName='plus'
+        />
       </SafeAreaView>
     )
   }
