@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     marginLeft: 60,
     marginRight: 60,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

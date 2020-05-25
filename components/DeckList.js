@@ -65,7 +65,6 @@ class DeckList extends Component {
         <FloatBtn
           toComponent={'NewDeck'}
           navigation={navigation}
-          position={'right'}
           bgColor={red}
           iconName='plus'
         />

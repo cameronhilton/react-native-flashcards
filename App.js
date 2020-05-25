@@ -35,34 +35,39 @@ const StackConfig = {
     component: Deck,
     options: {
       title: 'Deck',
+      headerTitleAlign: 'center',
     },
   },
   DeckList: {
     name: 'Home',
     component: DeckList,
     options: {
-      title: 'Home'
+      title: 'Home',
+      headerTitleAlign: 'center',
     },
   },
   NewDeck: {
     component: NewDeck,
     name: 'NewDeck',
     options: {
-      title: 'New Deck'
+      title: 'New Deck',
+      headerTitleAlign: 'center',
     }
   },
   NewCard: {
     name: 'NewCard',
     component: NewCard,
     options: {
-      title: 'Add Card'
+      title: 'Add Card',
+      headerTitleAlign: 'center',
     }
   },
   Quiz: {
     name: 'Quiz',
     component: Quiz,
     options: {
-      title: 'Quiz'
+      title: 'Quiz',
+      headerTitleAlign: 'center',
     }
   },
 }

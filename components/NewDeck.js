@@ -47,7 +47,7 @@ class NewDeck extends Component {
           <TouchableOpacity
             style={[
               Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
-              { opacity: question === '' || answer === '' ? 0.5 : 1 }
+              { opacity: value === '' ? 0.5 : 1 }
             ]}
             disabled={value === ''}
             onPress={() => this.handleOnPress()}>

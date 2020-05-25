@@ -62,14 +62,14 @@ class Quiz extends Component {
                 toComponent={'Deck'}
                 navigation={navigation}
                 params={{deck: decks[deck].title}}
-                position={'left'}
+                alignSelf={'flex-start'}
                 bgColor={pink}
                 iconName='list'
                 text='Deck'
               />
               <FloatBtn
                 onPress={() => this.setState({cardIndex: 0, correct: 0})}
-                position={'center'}
+                alignSelf={'center'}
                 bgColor={purple}
                 iconName='question'
                 text='Quiz'
@@ -113,12 +113,11 @@ const styles = StyleSheet.create({
   androidSubmitBtn: {
     backgroundColor: darkBlue,
     padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
     height: 45,
+    width: 130,
     borderRadius: 2,
-    marginLeft: 60,
-    marginRight: 60,
+    marginLeft: 30,
+    marginRight: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },

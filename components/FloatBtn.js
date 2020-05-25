@@ -3,15 +3,13 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { red, white } from '../utils/colors'
 
-export default function FloatBtn({ bgColor, iconName, navigation, onPress, params, position, text, toComponent }) {
+export default function FloatBtn({ alignSelf, bgColor, iconName, navigation, onPress, params, text, toComponent }) {
   return (
     <TouchableOpacity
       onPress={onPress ? onPress : () => navigation.navigate(toComponent, {...params})}
       style={[styles.floatBtn, {
         backgroundColor: bgColor || red,
-        alignSelf: position === 'center' && 'center',
-        left: position === 'left' ? 0 : 'auto',
-        right: position === 'right' ? 0 : 'auto',
+        alignSelf: alignSelf || 'flex-end',
       }]}
     >
       <FontAwesome name={iconName} size={40} color={white} />

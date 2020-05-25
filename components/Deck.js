@@ -40,7 +40,7 @@ class Deck extends Component {
             toComponent={'Quiz'}
             navigation={navigation}
             params={{deck}}
-            position={'center'}
+            alignSelf={'center'}
             bgColor={purple}
             iconName='sticky-note-o'
             text='Quiz'
@@ -49,7 +49,6 @@ class Deck extends Component {
           toComponent={'NewCard'}
           navigation={navigation}
           params={{deck}}
-          position={'right'}
           bgColor={red}
           iconName='plus'
         />
