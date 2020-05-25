@@ -52,7 +52,7 @@ class Quiz extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <DeckHeader title={`Quiz - ${correct} / ${cardIndex}`}/>
+        <DeckHeader title={`${correct} / ${cardIndex}`}/>
         {atEnd
           ? <View style={[styles.grow, {justifyContent: 'center'}]}>
               <Text style={styles.infoText}>

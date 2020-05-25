@@ -7,9 +7,8 @@ import {
   View } from 'react-native'
 import { connect } from 'react-redux'
 import Card from './Card'
-import DeckHeader from './DeckHeader'
 import FloatBtn from './FloatBtn'
-import { purple, red } from '../utils/colors'
+import { purple, red, lightBlue } from '../utils/colors'
 
 class Deck extends Component {
   componentDidMount() {
@@ -26,18 +25,16 @@ class Deck extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <DeckHeader title={`${decks[deck].title} - ${deckLength} ${lengthText}`}/>
-        <ScrollView>
-          {decks[deck].questions.length === 0
-            ? <View style={[styles.center, {padding: 20}]}>
-                <Text>No cards created yet</Text>
-              </View>
-            : decks[deck].questions.map((qAndA) => {
-                return (
-                  <Card key={qAndA.question} qAndA={qAndA}/>
-                )
-              })}
-        </ScrollView>
+        <Text style={styles.cardCount}>{deckLength} {lengthText}</Text>
+        {deckLength === 0
+          ? <View style={styles.center}>
+              <Text>No cards created yet</Text>
+            </View>
+          : <ScrollView>
+              {decks[deck].questions.map((qAndA) => (
+                <Card key={qAndA.question} qAndA={qAndA}/>))}
+            </ScrollView>}
+
         {deckLength > 0 &&
           <FloatBtn
             toComponent={'Quiz'}
@@ -65,7 +62,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    margin: 20,
+    marginLeft: 20,
+    marginRight: 20,
   },
   center: {
     flex: 1,
@@ -74,6 +72,12 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
   },
+  cardCount : {
+    padding: 5,
+    textAlign: 'center',
+    fontSize: 16,
+    color: lightBlue,
+  }
 })
 
 function mapStateToProps(decks) {

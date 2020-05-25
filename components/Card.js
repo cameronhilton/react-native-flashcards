@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { darkBlue, white } from '../utils/colors'
+import { darkBlue, gray, white } from '../utils/colors'
 
 export default class Card extends Component {
   state = {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     padding: 20,
-    backgroundColor: white,
+    backgroundColor: gray,
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
     marginTop: 10,
     marginBottom: 10,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
     shadowRadius: 3,
     shadowOpacity: 0.8,
-    color: 'rgba(0, 0, 0, 0.24)',
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
     shadowOffset: {
       width: 0,
       height: 3,

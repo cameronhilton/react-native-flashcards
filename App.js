@@ -41,7 +41,7 @@ const StackConfig = {
     name: 'Home',
     component: DeckList,
     options: {
-      headerShown: false
+      title: 'Home'
     },
   },
   NewDeck: {
