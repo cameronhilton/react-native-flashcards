@@ -57,7 +57,7 @@ export default class Card extends Component {
             style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
             onPress={() => this.toggleQuestion()}
           >
-            <Text style={styles.submitBtnText}>Show Answer</Text>
+            <Text style={styles.submitBtnText}>Show {showQuestion ? 'Answer' : 'Question'}</Text>
           </TouchableOpacity>}
       </View>
     )

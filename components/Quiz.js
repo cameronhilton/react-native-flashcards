@@ -8,17 +8,15 @@ import {
   TouchableOpacity,
   View } from 'react-native'
 import { connect } from 'react-redux'
-import { AppLoading } from 'expo'
-import { getDeck } from '../utils/helpers'
 import Card from './Card'
 import DeckHeader from './DeckHeader'
-import { darkBlue, white } from '../utils/colors'
+import FloatBtn from './FloatBtn'
+import { darkBlue, pink, purple, white } from '../utils/colors'
 
 class Quiz extends Component {
   state = {
     cardIndex: 0,
     correct: 0,
-    deck: null,
   }
 
   handleOnPress = (correct) => {
@@ -29,19 +27,11 @@ class Quiz extends Component {
 
   }
 
-  componentDidMount() {
-    getDeck(this.props.route.params.deck)
-      .then((deck) => this.setState(() => ({deck,})))
-  }
-
   render() {
-    const { cardIndex, correct, deck } = this.state
-
-    if (deck === null) {
-      return <AppLoading/>
-    }
-
-    const questionCount = deck.questions.length
+    const { cardIndex, correct } = this.state
+    const { decks, navigation, route } = this.props
+    const { deck } = route.params
+    const questionCount = decks[deck].questions.length
     const atEnd = cardIndex >= questionCount
 
     if (questionCount === 0) {
@@ -54,20 +44,31 @@ class Quiz extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <DeckHeader title={`Quiz - ${correct} / ${questionCount}`}/>
+        <DeckHeader title={`Quiz - ${correct} / ${cardIndex}`}/>
         {atEnd
-          ? <View style={styles.grow}>
-              <Text style={styles.noMoreCards}>Score: {Math.round(100 * correct / questionCount)}%</Text>
-              <View style={styles.center}>
-                <TouchableOpacity
-                  style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
-                  onPress={() => this.setState({cardIndex: 0, correct: 0})}>
-                  <Text style={styles.submitBtnText}>Restart Quiz</Text>
-                </TouchableOpacity>
-              </View>
+          ? <View style={[styles.grow, {justifyContent: 'center'}]}>
+              <Text style={styles.infoText}>
+                Score: {Math.round(100 * correct / questionCount)}%
+              </Text>
+              <FloatBtn
+                toComponent={'Deck'}
+                navigation={navigation}
+                params={{deck: decks[deck].title}}
+                position={'left'}
+                bgColor={pink}
+                iconName='list'
+                text='Deck'
+              />
+              <FloatBtn
+                onPress={() => this.setState({cardIndex: 0, correct: 0})}
+                position={'center'}
+                bgColor={purple}
+                iconName='question'
+                text='Quiz'
+              />
             </View>
           : <ScrollView contentContainerStyle={styles.grow}>
-              <Card qAndA={deck.questions[cardIndex]} showAnswerBtn={true}/>
+              <Card qAndA={decks[deck].questions[cardIndex]} showAnswerBtn={true}/>
               <View style={[styles.center, {flexDirection: 'row'}]}>
                 <TouchableOpacity
                   style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
@@ -80,6 +81,7 @@ class Quiz extends Component {
                   <Text style={styles.submitBtnText}>Incorrect</Text>
                 </TouchableOpacity>
               </View>
+              <Text style={styles.infoText}>Questions left: {questionCount - cardIndex}</Text>
             </ScrollView>}
       </SafeAreaView>
     )
@@ -127,9 +129,9 @@ const styles = StyleSheet.create({
   },
   grow: {
     flexGrow: 1,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
-  noMoreCards: {
+  infoText: {
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold',
@@ -137,4 +139,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(Quiz)
+function mapStateToProps(decks) {
+  return {
+    decks,
+  }
+}
+
+export default connect(mapStateToProps)(Quiz)
