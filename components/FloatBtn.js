@@ -1,15 +1,21 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { red, white } from '../utils/colors'
 
-export default function FloatBtn({ navigation, params, toComponent }) {
+export default function FloatBtn({ bgColor, iconName, navigation, onPress, params, position, text, toComponent }) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(toComponent, {...params})}
-      style={styles.floatBtn}
+      onPress={onPress ? onPress : () => navigation.navigate(toComponent, {...params})}
+      style={[styles.floatBtn, {
+        backgroundColor: bgColor || red,
+        alignSelf: position === 'center' && 'center',
+        left: position === 'left' ? 0 : 'auto',
+        right: position === 'right' ? 0 : 'auto',
+      }]}
     >
-      <FontAwesome name='plus' size={40} color={white} />
+      <FontAwesome name={iconName} size={40} color={white} />
+      {text && <Text style={{color: white}}>{text}</Text>}
   </TouchableOpacity>
   )
 }
@@ -21,9 +27,7 @@ const styles = StyleSheet.create({
     width: 70,
     position: 'absolute',
     bottom: 10,
-    right: 10,
     height: 70,
-    backgroundColor: red,
     borderRadius: 100,
   }
 })
