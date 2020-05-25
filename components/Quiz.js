@@ -12,6 +12,7 @@ import Card from './Card'
 import DeckHeader from './DeckHeader'
 import FloatBtn from './FloatBtn'
 import { darkBlue, pink, purple, white } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
   state = {
@@ -20,11 +21,18 @@ class Quiz extends Component {
   }
 
   handleOnPress = (correct) => {
+    const newCardIndex = this.state.cardIndex + 1
+
     this.setState((currentState) => ({
-      cardIndex: currentState.cardIndex + 1,
+      cardIndex: newCardIndex,
       correct: correct ? currentState.correct + 1 : currentState.correct,
     }))
 
+    // Quiz completed, clear daily notification
+    if (newCardIndex >= this.props.decks[this.props.route.params.deck].questions.length) {
+      clearLocalNotification()
+        .then(setLocalNotification())
+    }
   }
 
   render() {

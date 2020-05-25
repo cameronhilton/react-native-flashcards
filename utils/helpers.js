@@ -1,6 +1,9 @@
 import { AsyncStorage } from 'react-native'
+import * as Permissions from 'expo-permissions'
+import { Notifications } from 'expo'
 
 const DECK_STORAGE_KEY = 'FlashCards:decks'
+const NOTIFICATION_KEY = 'FlashCards:notifications'
 
 // return all of the decks along with their titles, questions, and answers
 export async function getDecks() {
@@ -80,4 +83,56 @@ const samples = {
 
 function addSampleCards() {
   return AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(samples))
+}
+
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+export function createNotification() {
+  return {
+    title: 'Take a quiz!',
+    body: `👋 Don't forget to take a FlashCards quiz today!`,
+    ios: {
+      sound: true,
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: false,
+      vibrate: true,
+    }
+  }
+}
+
+// Set daily notification to take quiz
+export function setLocalNotification() {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then((status) => {
+            if (status === 'granted') {
+              Notifications.cancelAllScheduledNotificationsAsync()
+
+              let tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate() + 1)
+              tomorrow.setHours(20)
+              tomorrow.setMinutes(0)
+
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(),
+                {
+                  time: tomorrow,
+                  repeat: 'day',
+                }
+              )
+
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+          })
+      }
+    })
 }
