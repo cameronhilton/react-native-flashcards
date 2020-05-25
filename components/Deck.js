@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import Card from './Card'
 import DeckHeader from './DeckHeader'
 import FloatBtn from './FloatBtn'
+import { purple, red } from '../utils/colors'
 
 class Deck extends Component {
   componentDidMount() {
@@ -37,7 +38,24 @@ class Deck extends Component {
                 )
               })}
         </ScrollView>
-        <FloatBtn toComponent={'NewCard'} navigation={navigation} params={{deck}}/>
+        {deckLength > 0 &&
+          <FloatBtn
+            toComponent={'Quiz'}
+            navigation={navigation}
+            params={{deck}}
+            position={'center'}
+            bgColor={purple}
+            iconName='sticky-note-o'
+            text='Quiz'
+          />}
+        <FloatBtn
+          toComponent={'NewCard'}
+          navigation={navigation}
+          params={{deck}}
+          position={'right'}
+          bgColor={red}
+          iconName='plus'
+        />
       </SafeAreaView>
     )
   }
