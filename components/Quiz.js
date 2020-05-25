@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import Card from './Card'
 import DeckHeader from './DeckHeader'
 import FloatBtn from './FloatBtn'
-import { darkBlue, pink, purple, white } from '../utils/colors'
+import { darkBlue, pink, purple, red, white } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
@@ -78,15 +78,15 @@ class Quiz extends Component {
           : <ScrollView contentContainerStyle={styles.grow}>
               <Card qAndA={decks[deck].questions[cardIndex]} showAnswerBtn={true}/>
               <View style={[styles.center, {flexDirection: 'row'}]}>
+              <TouchableOpacity
+                  style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn, {backgroundColor: red}]}
+                  onPress={() => this.handleOnPress(false)}>
+                  <Text style={styles.submitBtnText}>Incorrect</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                   style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
                   onPress={() => this.handleOnPress(true)}>
                   <Text style={styles.submitBtnText}>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
-                  onPress={() => this.handleOnPress(false)}>
-                  <Text style={styles.submitBtnText}>Incorrect</Text>
                 </TouchableOpacity>
               </View>
               <Text style={styles.infoText}>Questions left: {questionCount - cardIndex}</Text>
